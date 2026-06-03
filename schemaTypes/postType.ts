@@ -1,8 +1,8 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const postType = defineType({
   name: 'post',
-  title: 'Post',
+  title: 'Blog Post',
   type: 'document',
   fields: [
     defineField({
@@ -23,13 +23,67 @@ export const postType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'image',
+      name: 'excerpt',
+      type: 'text',
+      rows: 4,
+      validation: (rule) => rule.required().max(320),
+    }),
+    defineField({
+      name: 'heroImage',
       type: 'image',
+      options: {hotspot: true},
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+      ],
+    }),
+    defineField({
+      name: 'tags',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{type: 'blogTag'}],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'featured',
+      type: 'boolean',
+      initialValue: false,
     }),
     defineField({
       name: 'body',
       type: 'array',
-      of: [{type: 'block'}],
+      of: [
+        defineArrayMember({type: 'block'}),
+        defineArrayMember({type: 'imageBlock'}),
+        defineArrayMember({type: 'videoEmbed'}),
+        defineArrayMember({type: 'codeSnippet'}),
+      ],
+      validation: (rule) => rule.min(1),
+    }),
+    defineField({
+      name: 'additionalLinks',
+      type: 'array',
+      of: [defineArrayMember({type: 'linkType'})],
+    }),
+    defineField({
+      name: 'seoDescription',
+      type: 'text',
+      rows: 3,
+      validation: (rule) => rule.max(160),
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'publishedAt',
+      media: 'heroImage',
+    },
+  },
 })
