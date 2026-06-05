@@ -86,6 +86,8 @@ export const recipeType = defineType({
                   {title: 'stick', value: 'stick'},
                   {title: 'piece', value: 'piece'},
                   {title: 'to taste', value: 'to taste'},
+                  {title: 'bunch', value: 'bunch'},
+                  {title: 'slice', value: 'slice'},
                 ],
               },
             }),
