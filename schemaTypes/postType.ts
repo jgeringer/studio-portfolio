@@ -30,16 +30,29 @@ export const postType = defineType({
     }),
     defineField({
       name: 'heroImage',
-      type: 'image',
-      options: {hotspot: true},
+      title: 'Hero Image',
+      type: 'object',
       fields: [
         defineField({
-          name: 'alt',
+          name: 'path',
+          title: 'TwicPics Image Path',
+          description:
+            'Paste full TwicPics URL, e.g. https://joegeringer.twic.pics/images/blog-cover.jpg?twic=v1/refit-cover=1200x800/quality=80/output=auto',
+          type: 'url',
+          validation: (rule) =>
+            rule.required().uri({
+              scheme: ['http', 'https'],
+              allowRelative: false,
+            }),
+        }),
+        defineField({
+          name: 'altText',
           title: 'Alt Text',
           type: 'string',
           validation: (rule) => rule.required(),
         }),
       ],
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'tags',
@@ -83,7 +96,6 @@ export const postType = defineType({
     select: {
       title: 'title',
       subtitle: 'publishedAt',
-      media: 'heroImage',
     },
   },
 })

@@ -26,15 +26,31 @@ export const certificationType = defineType({
     }),
     defineField({
       name: 'image',
-      type: 'image',
-      options: {hotspot: true},
+      title: 'Image',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'path',
+          title: 'TwicPics Image Path',
+          type: 'url',
+          validation: (rule) =>
+            rule.required().uri({
+              scheme: ['http', 'https'],
+              allowRelative: false,
+            }),
+        }),
+        defineField({
+          name: 'altText',
+          title: 'Alt Text',
+          type: 'string',
+        }),
+      ],
     }),
   ],
   preview: {
     select: {
       title: 'title',
       subtitle: 'issuer',
-      media: 'image',
     },
   },
 })

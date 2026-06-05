@@ -24,11 +24,23 @@ export const pizzaType = defineType({
     }),
     defineField({
       name: 'heroImage',
-      type: 'image',
-      options: {hotspot: true},
+      title: 'Hero Image',
+      type: 'object',
       fields: [
         defineField({
-          name: 'alt',
+          name: 'path',
+          title: 'TwicPics Image Path',
+          description:
+            'Paste full TwicPics URL, e.g. https://joegeringer.twic.pics/images/pizza-foxs-close-up.jpg?twic=v1/refit-cover=400x400/quality=80/output=auto',
+          type: 'url',
+          validation: (rule) =>
+            rule.required().uri({
+              scheme: ['http', 'https'],
+              allowRelative: false,
+            }),
+        }),
+        defineField({
+          name: 'altText',
           title: 'Alt Text',
           type: 'string',
           validation: (rule) => rule.required(),
@@ -39,7 +51,45 @@ export const pizzaType = defineType({
     defineField({
       name: 'gallery',
       type: 'array',
-      of: [defineArrayMember({type: 'imageBlock'})],
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'path',
+              title: 'TwicPics Image Path',
+              type: 'url',
+              validation: (rule) =>
+                rule.required().uri({
+                  scheme: ['http', 'https'],
+                  allowRelative: false,
+                }),
+            }),
+            defineField({
+              name: 'altText',
+              title: 'Alt Text',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'caption',
+              type: 'string',
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'caption',
+              subtitle: 'path',
+            },
+            prepare({title, subtitle}) {
+              return {
+                title: title || 'Gallery image',
+                subtitle,
+              }
+            },
+          },
+        }),
+      ],
     }),
     defineField({
       name: 'establishedYear',
@@ -119,13 +169,11 @@ export const pizzaType = defineType({
     select: {
       title: 'name',
       subtitle: 'establishedYear',
-      media: 'heroImage',
     },
-    prepare({title, subtitle, media}) {
+    prepare({title, subtitle}) {
       return {
         title,
         subtitle: subtitle ? `Est. ${subtitle}` : undefined,
-        media,
       }
     },
   },

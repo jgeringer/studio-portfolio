@@ -22,8 +22,26 @@ export const resumeType = defineType({
     }),
     defineField({
       name: 'profileImage',
-      type: 'image',
-      options: {hotspot: true},
+      title: 'Profile Image',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'path',
+          title: 'TwicPics Image Path',
+          type: 'url',
+          validation: (rule) =>
+            rule.required().uri({
+              scheme: ['http', 'https'],
+              allowRelative: false,
+            }),
+        }),
+        defineField({
+          name: 'altText',
+          title: 'Alt Text',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+      ],
     }),
     defineField({
       name: 'downloadResume',
@@ -71,7 +89,6 @@ export const resumeType = defineType({
     select: {
       title: 'name',
       subtitle: 'headline',
-      media: 'profileImage',
     },
   },
 })

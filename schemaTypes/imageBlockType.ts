@@ -6,13 +6,19 @@ export const imageBlockType = defineType({
   type: 'object',
   fields: [
     defineField({
-      name: 'image',
-      type: 'image',
-      options: {hotspot: true},
-      validation: (rule) => rule.required(),
+      name: 'path',
+      title: 'TwicPics Image Path',
+      description:
+        'Paste full TwicPics URL, e.g. https://joegeringer.twic.pics/images/example.jpg?twic=v1/refit-cover=1200x800/quality=80/output=auto',
+      type: 'url',
+      validation: (rule) =>
+        rule.required().uri({
+          scheme: ['http', 'https'],
+          allowRelative: false,
+        }),
     }),
     defineField({
-      name: 'alt',
+      name: 'altText',
       title: 'Alt Text',
       type: 'string',
       validation: (rule) => rule.required(),
@@ -25,14 +31,13 @@ export const imageBlockType = defineType({
   preview: {
     select: {
       title: 'caption',
-      media: 'image',
-      alt: 'alt',
+      subtitle: 'path',
+      altText: 'altText',
     },
-    prepare({title, media, alt}) {
+    prepare({title, subtitle, altText}) {
       return {
         title: title || 'Image block',
-        subtitle: alt,
-        media,
+        subtitle: altText || subtitle,
       }
     },
   },
