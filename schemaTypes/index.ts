@@ -5,11 +5,13 @@ import {codeSnippetType} from './codeSnippetType'
 import {educationType} from './educationType'
 import {imageBlockType} from './imageBlockType'
 import {jobType} from './jobType'
+import {kitchenSettingsType} from './kitchenSettingsType'
 import {linkType} from './linkType'
 import {pizzaSettingsType} from './pizzaSettingsType'
 import {pizzaStyleType} from './pizzaStyleType'
 import {pizzaType} from './pizzaType'
 import {postType} from './postType'
+import {recipeType} from './recipeType'
 import {resumeType} from './resumeType'
 import {skillGroupType} from './skillGroupType'
 import {videoEmbedType} from './videoEmbedType'
@@ -24,6 +26,8 @@ export const schemaTypes = [
 	pizzaType,
 	pizzaStyleType,
 	pizzaSettingsType,
+	recipeType,
+	kitchenSettingsType,
 	resumeType,
 	jobType,
 	linkType,
