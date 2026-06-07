@@ -60,6 +60,12 @@ export const resumeType = defineType({
       validation: (rule) => rule.min(1),
     }),
     defineField({
+      name: 'mainSitesDeveloped',
+      title: 'Main Sites Developed',
+      type: 'array',
+      of: [defineArrayMember({type: 'linkType'})],
+    }),
+    defineField({
       name: 'certifications',
       type: 'array',
       of: [defineArrayMember({type: 'certificationType'})],

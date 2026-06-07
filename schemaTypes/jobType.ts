@@ -51,12 +51,6 @@ export const jobType = defineType({
       validation: (rule) => rule.min(1),
     }),
     defineField({
-      name: 'mainSitesDeveloped',
-      title: 'Main Sites Developed',
-      type: 'array',
-      of: [defineArrayMember({type: 'linkType'})],
-    }),
-    defineField({
       name: 'technologies',
       type: 'array',
       of: [defineArrayMember({type: 'string'})],
